@@ -27,9 +27,10 @@ def main(intputFilePath):
                     "cash": 0.0,
                     "stocks": {}
                 }
-
+            # Calculate the accumulated amount of money spent so far
             traders[trader]['cash'] -= price * float(quantity) + fee
 
+            # Update the amount that the trader owns for each stock
             if stkCode not in traders[trader]['stocks']:
                 traders[trader]['stocks'][stkCode] = {
                     "quantity": quantity,
@@ -44,6 +45,10 @@ def main(intputFilePath):
     for trader, history in traders.items():
         cash = history['cash']
         stocks = history['stocks']
+
+        # The profit is calculated based on the accummulated money spent and the value of stocks owned
+        # Note:
+        # 1. The value of the stock is calculated based on the latest purchasing price
         for stkCode, detail in stocks.items():
             cash += detail['quantity'] * detail['price']
         finalResult[trader] = round(cash,2)
